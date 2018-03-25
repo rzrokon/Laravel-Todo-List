@@ -1,82 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout')
 
-        <title>Laravel</title>
+@section('content')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 20px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-
-            <div class="content">
-                <div class="title m-b-md">
-
-                    @foreach($tasks as $task)
-                        {{ $task->todo }}
-                        <hr>
-                    @endforeach
-
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-lg-6 offset-3">
+            <form class="" action="/create/todo" method="post">
+                {{ csrf_field() }}
+                <input type="text" name="entertodo" class="form-control input-lg" placeholder="Create a new todo">
+            </form>
         </div>
-    </body>
-</html>
+    </div>
+
+    @foreach($tasks as $task)
+        <hr>
+        {{ $task->todo }} <a href="{{ route('todo.delete', ['id' => $task->id]) }}" class="btn btn-danger"> x </a> <a href="{{ route('todo.update', ['id' => $task->id]) }}" class="btn btn-info"> Update </a>
+
+        @if(!$task->completed)
+            <a href="{{ route('todo.completed', ['id' => $task->id]) }}" class="btn btn-success"> Mark AS Complete </a>
+        @else
+            <span class="">Completed!</span>
+        @endif
+
+
+    @endforeach
+
+@stop
