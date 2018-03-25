@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/new', [
     'uses' => 'PagesController@news'
 ]);
+
+Route::get('/todos', [
+    'uses' => 'TodosController@index'
+]);
